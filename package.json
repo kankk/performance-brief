@@ -20,6 +20,11 @@
   "bugs": {
     "url": "https://github.com/kankk/performance-brief/issues"
   },
+  "files": [
+    "dist/*.js",
+    "types/*.d.ts"
+  ],
+  "typings": "types/index.d.ts",
   "homepage": "https://github.com/kankk/performance-brief#readme",
   "devDependencies": {
     "clean-webpack-plugin": "^2.0.1",
