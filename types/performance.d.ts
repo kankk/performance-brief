@@ -13,5 +13,18 @@ export declare class Performance {
 }
 
 export interface PerformanceOption {
-  
+  /**
+   * 白屏时间限制阈值(毫秒)
+   *
+   * @type {number}
+   * @memberof PerformanceOption
+   */
+  whitePageLimit?: number;
+  /**
+   * 白屏时间超过限制阈值触发的回调函数
+   *
+   * @type {Function}
+   * @memberof PerformanceOption
+   */
+  whitePageLimitCallback?: Function;
 }

@@ -7,7 +7,10 @@ class Performance {
   private report: string
 
   constructor(options: PerformanceOption = {}) {
-    this.options = Object.assign({}, options);
+    this.options = Object.assign({
+      whitePageLimit: 100,
+      whitePageLimitCallback: null
+    }, options);
 
     this.performance = window.performance;
 
@@ -59,13 +62,23 @@ class Performance {
       secureConnectionStart,  // 返回浏览器与服务器开始安全链接的握手时的时间戳, 如果当前网页不要求安全连接, 则返回0
     } = timing;
 
+    const whitePageTime = responseStart - navigationStart;
+
+    if (whitePageTime > this.options.whitePageLimit) {
+      if (typeof this.options.whitePageLimitCallback === 'function') {
+        this.options.whitePageLimitCallback();
+      } else {
+        console.log('白屏时间超过了限制');
+      }
+    }
+
     this.report = `------------------
   重定向耗时: ${redirectEnd - redirectStart}
   DNS查询耗时: ${domainLookupEnd - domainLookupStart}
   TCP链接耗时: ${connectEnd - connectStart}
   HTTP请求耗时: ${responseEnd - responseStart}
   解析dom树耗时: ${domComplete - domInteractive}
-  白屏耗时: ${responseStart - navigationStart}
+  白屏耗时: ${whitePageTime}
 ------------------`;
   }
 
