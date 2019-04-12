@@ -2,11 +2,12 @@ import { PerformanceOption } from "../types";
 
 class Performance {
 
-  options: Object
-  performance: any
+  private options: PerformanceOption
+  private performance: any
+  private report: string
 
-  constructor(options: PerformanceOption) {
-    this.options = options;
+  constructor(options: PerformanceOption = {}) {
+    this.options = Object.assign({}, options);
 
     this.performance = window.performance;
 
@@ -14,17 +15,25 @@ class Performance {
       console.log('当前浏览器不支持performance');
       return;
     }
-
   }
-
-  run() {
-    const memory = this.performance.memory; // 内存
-    const navigation = this.performance.navigation; // 来源
-
+  
+  /**
+   * 初始化
+   *
+   * @memberof Performance
+   */
+  init() {
     this.displayTiming();
   }
 
-  displayTiming() {
+  
+  /**
+   *  计算时间点
+   *
+   * @private
+   * @memberof Performance
+   */
+  private displayTiming() {
     const timing = this.performance.timing; // 关键点时间
     const {
       navigationStart,  // 表征了从同一个浏览器上下文的上一个文档卸载结束时的时间戳. 如果没有上一个文档, 这个值和fetchStart相同
@@ -50,14 +59,39 @@ class Performance {
       secureConnectionStart,  // 返回浏览器与服务器开始安全链接的握手时的时间戳, 如果当前网页不要求安全连接, 则返回0
     } = timing;
 
-    console.log(`重定向耗时: ${redirectEnd - redirectStart}`);
-    console.log(`DNS查询耗时: ${domainLookupEnd - domainLookupStart}`);
-    console.log(`TCP链接耗时: ${connectEnd - connectStart}`);
-    console.log(`HTTP请求耗时: ${responseEnd - responseStart}`);
-    console.log(`解析dom树耗时: ${domComplete - domInteractive}`);
-    console.log(`白屏耗时: ${responseStart - navigationStart}`);
-    console.log(`DOMready向耗时: ${domContentLoadedEventEnd - navigationStart}`);
-    console.log(`onload耗时: ${loadEventEnd - navigationStart}`);
+    this.report = `------------------
+  重定向耗时: ${redirectEnd - redirectStart}
+  DNS查询耗时: ${domainLookupEnd - domainLookupStart}
+  TCP链接耗时: ${connectEnd - connectStart}
+  HTTP请求耗时: ${responseEnd - responseStart}
+  解析dom树耗时: ${domComplete - domInteractive}
+  白屏耗时: ${responseStart - navigationStart}
+------------------`;
+  }
+
+  /**
+   * 获取Performance报告
+   *
+   * @returns
+   * @memberof Performance
+   */
+  getReportText() {
+    return this.report;
+  }
+
+  /**
+   * 获取白屏时间
+   *
+   * @returns
+   * @memberof Performance
+   */
+  getWhitePageTime() {
+    const {
+      responseStart,
+      navigationStart
+    } = this.performance.timing;
+
+    return responseStart - navigationStart;
   }
 }
 

@@ -10,7 +10,7 @@ module.exports = merge(commonConfig, {
   devtool: "source-map",
   // entry: './test/browser/index.js',
   entry: {
-    index: './test/browser/index.js'
+    index: './test/browser/index.ts'
   },
   output: {
     path: path.resolve(__dirname, 'dist'),
