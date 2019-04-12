@@ -1,12 +1,14 @@
 {
   "name": "performance-brief",
-  "version": "0.0.8",
+  "version": "0.0.13",
   "description": "",
   "main": "dist/index.js",
   "scripts": {
     "dev": "webpack-dev-server --progres --open --config webpack.dev.js",
     "build": "node scripts/build.js",
-    "clean": "node scripts/clean.js"
+    "clean": "node scripts/clean.js",
+    "release": "node scripts/release.js && bash scripts/release.sh",
+    "update:version": "node scripts/update-version.js"
   },
   "repository": {
     "type": "git",
@@ -27,6 +29,7 @@
   "typings": "types/index.d.ts",
   "homepage": "https://github.com/kankk/performance-brief#readme",
   "devDependencies": {
+    "chalk": "^2.4.2",
     "clean-webpack-plugin": "^2.0.1",
     "html-webpack-plugin": "^3.2.0",
     "ts-loader": "^5.3.3",

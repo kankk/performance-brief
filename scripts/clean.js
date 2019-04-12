@@ -1,5 +1,6 @@
 const path = require('path');
 const fs = require('fs');
+const chalk = require('chalk');
 
 function delDir(path) {
   let files = [];
@@ -20,6 +21,7 @@ function delDir(path) {
 function deleteDist() {
   const distPath = path.resolve(process.cwd(), './dist');
   delDir(distPath);
+  console.log(chalk.green('删除dist成功'));
 }
 
 deleteDist();
