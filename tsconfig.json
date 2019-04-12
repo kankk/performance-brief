@@ -2,11 +2,31 @@
   "compilerOptions": {
     "module": "commonjs",
     "target": "es5",
+    "lib": ["es2015", "es2017", "dom"],
     "outDir": "dist",
-    "allowJs": true
+    "removeComments": true,
+    "typeRoots": [
+      "node_modules/@types",
+      "types"
+    ],
+    // "sourceMap": true,
+    // "declaration": true,
+    // "noImplicitAny": true,
+    // "noImplicitThis": true,
+    // "pretty": true,
+    // "strictNullChecks": true,
+    // "noImplicitReturns": true,
+    // "noUnusedParameters": true,
+    // "moduleResolution": "node",
+    // "emitDecoratorMetadata": true,
+    // "experimentalDecorators": true,
   },
   "include": [
-    "src/*.ts",
-    "types/*.d.ts"
+    "src",
+    "types"
+  ],
+  "exclude": [
+    "node_modules",
+    "dist"
   ]
 }
