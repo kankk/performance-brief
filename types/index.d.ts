@@ -3,5 +3,7 @@ import { Performance } from './performance';
 export default Performance;
 
 export {
-  PerformanceOption
+  PerformanceOption,
+  TimingReport,
+  EntryReport
 } from './performance';

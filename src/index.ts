@@ -1,10 +1,13 @@
-import { PerformanceOption } from "../types";
+import { PerformanceOption, TimingReport, EntryReport } from "../types";
 
 class Performance {
 
   private options: PerformanceOption
   private performance: any
-  private report: string
+  private timingReport: TimingReport
+  private timingReportText: string
+  private entryReport: EntryReport[]
+  private entryReportText: string
 
   constructor(options: PerformanceOption = {}) {
     this.options = Object.assign({
@@ -26,17 +29,18 @@ class Performance {
    * @memberof Performance
    */
   init() {
-    this.displayTiming();
+    this.generateTimingReport();
+    this.generateEntryReport();
   }
 
   
   /**
-   *  计算时间点
+   *  生成Performance报告
    *
    * @private
    * @memberof Performance
    */
-  private displayTiming() {
+  private generateTimingReport() {
     const timing = this.performance.timing; // 关键点时间
     const {
       navigationStart,  // 表征了从同一个浏览器上下文的上一个文档卸载结束时的时间戳. 如果没有上一个文档, 这个值和fetchStart相同
@@ -72,7 +76,7 @@ class Performance {
       }
     }
 
-    this.report = `------------------
+    this.timingReportText = `------------------
   重定向耗时: ${redirectEnd - redirectStart}
   DNS查询耗时: ${domainLookupEnd - domainLookupStart}
   TCP链接耗时: ${connectEnd - connectStart}
@@ -83,13 +87,69 @@ class Performance {
   }
 
   /**
-   * 获取Performance报告
+   * 生成Entry加载报告
+   *
+   * @private
+   * @memberof Performance
+   */
+  private generateEntryReport () {
+    const entries = this.performance.getEntries();
+    const reports = [];
+    const reportsTexts = [];
+    for (let item of entries) {
+      reports.push({
+        name: item.name,
+        initiatorType: item.initiatorType,
+        entryType: item.entryType,
+        duration: item.duration,
+        size: item.transferSize,
+      });
+
+      reportsTexts.push(`${item.name}(${item.entryType}-${item.transferSize}): ${item.duration.toFixed(2)}ms`);
+    }
+
+    this.entryReport = reports;
+    this.entryReportText = `------------------
+${reportsTexts.join('\n')}
+------------------`;
+  }
+
+  /**
+   * 获取Performance报告(对象)
+   *
+   * @memberof Performance
+   */
+  getTimingReport() {
+    return this.timingReport;
+  }
+
+  /**
+   * 获取Performance报告(字符串)
    *
    * @returns
    * @memberof Performance
    */
-  getReportText() {
-    return this.report;
+  getTimingReportText() {
+    return this.timingReportText;
+  }
+
+  /**
+   * 获取Entry加载报告(数组)
+   *
+   * @memberof Performance
+   */
+  getEntryReport() {
+    return this.entryReport;
+  }
+
+  /**
+   * 获取Entry加载报告(字符串)
+   *
+   * @returns
+   * @memberof Performance
+   */
+  getEntryReportText() {
+    return this.entryReportText;
   }
 
   /**

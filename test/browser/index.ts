@@ -16,5 +16,11 @@ const performance = new Performance(options);
 
 performance.init();
 
-const report = document.getElementById('report');
-report.innerHTML = performance.getReportText();
+const performanceReport = document.getElementById('performance-report');
+performanceReport.innerHTML = performance.getTimingReportText();
+
+const entryReport = document.getElementById('entry-report');
+entryReport.innerHTML = performance.getEntryReportText();
+
+console.log(performance.getTimingReport());
+console.log(performance.getEntryReport());

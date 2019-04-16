@@ -3,13 +3,16 @@ export declare class Performance {
 
   private options: PerformanceOption;
   private performance: any
-  private report: string
+  private timingReportText: string
 
   init(): void;
-  getReportText(): string;
+  getTimingReport(): TimingReport;
+  getTimingReportText(): string;
+  getEntryReport(): EntryReport[];
+  getEntryReportText(): string;
   getWhitePageTime(): number;
   
-  private displayTiming(): void;
+  private generateTimingReport(): void;
 }
 
 export interface PerformanceOption {
@@ -27,4 +30,16 @@ export interface PerformanceOption {
    * @memberof PerformanceOption
    */
   whitePageLimitCallback?: Function;
+}
+
+export interface TimingReport {
+
+}
+
+export interface EntryReport {
+  name: string,
+  initiatorType: string,
+  entryType: string,
+  duration: number,
+  size: number,
 }
