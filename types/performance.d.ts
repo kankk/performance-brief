@@ -3,8 +3,10 @@ export declare class Performance {
 
   private options: PerformanceOption;
   private performance: any
+  private analyzer: any
 
   run(): void;
+  getTimingReport(): void;
 }
 
 export interface PerformanceOption {

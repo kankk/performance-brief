@@ -16,6 +16,12 @@ module.exports = merge(commonConfig, {
     path: path.resolve(__dirname, 'dist'),
     filename: '[name].js'
   },
+  module: {
+    rules: [{
+      test: /\.less$/,
+      use: ['style-loader', 'css-loader', 'less-loader']
+    }]
+  },
   plugins: [
     new HtmlWebpackPlugin({
       filename: 'index.html',

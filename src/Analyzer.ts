@@ -34,10 +34,10 @@ class Analyzer {
   }
 
   report() {
-    this.timingReport = this.getTimingReport();
+    this.timingReport = this.generateTimingReport();
   }
 
-  private getTimingReport () {
+  private generateTimingReport () {
     const {
       navigationStart,
       // redirectStart,
@@ -117,6 +117,10 @@ class Analyzer {
     console.table(timingReport);
 
     return timingReport;
+  }
+
+  getTimingReport () {
+    return this.timingReport;
   }
 }
 

@@ -7,6 +7,7 @@ class Performance {
 
   private options: PerformanceOption
   private performance: any
+  private analyzer: any
   constructor(options: PerformanceOption = {}) {
     this.options = Object.assign({
     }, options);
@@ -28,8 +29,8 @@ class Performance {
             setTimeout(() => {
               this.performance = window.performance;
               window.removeEventListener('load', loadHandler);
-              const analyzer = new Analyzer(this.performance);
-              const report = analyzer.report();
+              this.analyzer = new Analyzer(this.performance);
+              this.analyzer.report();
               resolve(this);
             }, 0)
           }
@@ -39,6 +40,10 @@ class Performance {
         reject(err);
       }
     })
+  }
+
+  getTimingReport () {
+    return this.analyzer.getTimingReport();
   }
 }
 

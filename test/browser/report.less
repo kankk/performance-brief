@@ -1,0 +1,53 @@
+.report-modal-wrap {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  .report-modal {
+    width: 90vw;
+    height: 90vh;
+    background-color: rgba(255, 255, 255, 1);
+    border-radius: 4px;
+    position: relative;
+    .close {
+      @close_width: 20px;
+      @close_height: 20px;
+      @close_bg: #999;
+      width: @close_width;
+      height: @close_height;
+      position: absolute;
+      top: 5px;
+      right: 5px;
+      transform: rotate(45deg);
+      &:hover {
+        opacity: 0.65;
+        cursor: pointer;
+      }
+      .close-vertical {
+        position: absolute;
+        width: 2px;
+        height: @close_height;
+        background-color: @close_bg;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+      }
+      .close-horizontal {
+        position: absolute;
+        width: @close_width;
+        height: 2px;
+        background-color: @close_bg;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+      }
+    }
+  }
+}
