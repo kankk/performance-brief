@@ -10,12 +10,14 @@ function createObjectTable(object, titleText = '') {
   // title
   if (titleText) {
     const title = document.createElement('div');
+    title.className = 'table-title'
     title.innerHTML = titleText;
     tableWrap.appendChild(title);
   }
 
   // table
   const table = document.createElement('table');
+  table.className = 'table'
   
   // thread
   const headerTr = document.createElement('tr');
@@ -34,12 +36,12 @@ function createObjectTable(object, titleText = '') {
     const tr = document.createElement('tr');
     const keyTd = document.createElement('td');
     keyTd.innerText = key;
-    table.appendChild(keyTd);
+    tr.appendChild(keyTd);
 
     for (let _value of Object.values(value)) {
       const itemTd = document.createElement('td');
       itemTd.innerText = _value;
-      table.appendChild(itemTd);
+      tr.appendChild(itemTd);
     }
 
     table.appendChild(tr);
